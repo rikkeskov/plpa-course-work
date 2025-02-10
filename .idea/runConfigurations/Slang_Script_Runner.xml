@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Slang Script Runner" type="Application" factoryName="Application" singleton="false">
+    <envs>
+      <env name="JAVA_HOME" value="C:\Users\Rikke\Sireum\bin\win\java" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="org.sireum.Sireum" />
+    <module name="plpa-course-work-proyek" />
+    <option name="PROGRAM_PARAMETERS" value="slang run $FilePath$" />
+    <method v="2" />
+  </configuration>
+</component>
