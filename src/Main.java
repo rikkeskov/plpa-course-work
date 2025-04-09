@@ -63,11 +63,11 @@ public class Main {
 
       private void handleTextChange() {
         // Debounce 500ms
-        t.throttle(
-                () -> painter.paint(inputField.getText()),
-                3000
-        );
-        //painter.paint(inputField.getText());
+        // t.throttle(
+        //        () -> painter.paint(inputField.getText()),
+        //        3000
+        //);
+        painter.paint(inputField.getText());
       }
     });
 

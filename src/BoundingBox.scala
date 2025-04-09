@@ -10,7 +10,7 @@ class BoundingBox(text: String) extends DrawObject[Array[Int]] {
   override val color: Color = new Color(0, 0, 0)
   override val fill: Color = new Color(0, 0, 0,0)
 
-  override def draw(g: Graphics): Unit = {
-    g.drawRect(arguments(0), arguments(1), arguments(0) - arguments(2), arguments(1) - arguments(3))
+  override def draw(context: DrawContext): Unit = {
+    context.graphics.drawRect(arguments(0), arguments(1), arguments(0) - arguments(2), arguments(1) - arguments(3))
   }
 }

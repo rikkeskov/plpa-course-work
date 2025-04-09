@@ -1,8 +1,8 @@
 import java.awt.Polygon
 
-class Line(args: String) extends DrawObject[_] {
+class Line(args: String) extends DrawObject {
 
-  override val arguments: _ = ???
+  override val arguments: Int = 0
 
   override def draw(context: DrawContext): Unit = {
     // Should use Bresenham's line algorithm
@@ -11,7 +11,7 @@ class Line(args: String) extends DrawObject[_] {
     context.graphics.drawPolygon(p)
     context.latestBoundingBox match {
       case Some(bb) => context.graphics.setClip(bb)
-      case None =>  context.addError(this, )
+      case None =>  context.addError(this, "Invalid drawing")
     }
 
   }

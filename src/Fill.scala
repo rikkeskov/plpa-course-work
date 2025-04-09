@@ -1,6 +1,6 @@
-class Fill(args: String) extends DrawObject[_] {
+class Fill(args: String) extends DrawObject {
 
-  override val arguments: _ = ???
+  override val arguments: Int = 0
 
-  override def draw(context: DrawContext): Unit = ???
+  override def draw(context: DrawContext): Unit = {}
 }

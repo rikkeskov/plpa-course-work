@@ -30,11 +30,9 @@ class Painter(canvas: JComponent) {
   def paint(text: String): Unit = {
     context.objects = this.parse(text)
 
-    /*
     for (obj <- context.objects)
 
       obj.draw(context)
 
-    */
   }
 }
