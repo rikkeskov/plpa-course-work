@@ -1,6 +1,6 @@
-import java.awt.{Graphics, Shape}
+import java.awt.{Graphics2D, Shape}
 
-class DrawContext(val graphics: Graphics) {
+class DrawContext(val graphics: Graphics2D) {
   var objects: Array[DrawObject[_]] = Array()
   var latestBoundingBox: Option[Shape] = None
   var errors: Array[(Int, String)] = Array()

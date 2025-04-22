@@ -22,6 +22,8 @@ public class Main {
     // Left Panel: Display area
     JPanel leftPanel = new JPanel();
     leftPanel.setLayout(new BorderLayout());
+    canvas.setSize(400, 400);
+    canvas.setBorder(BorderFactory.createLineBorder(Color.GREEN));
     leftPanel.add(canvas);
 
 
@@ -42,7 +44,7 @@ public class Main {
     frame.add(leftPanel, BorderLayout.CENTER);
     frame.add(rightPanel, BorderLayout.EAST);
 
-    Throttler t = new Throttler();
+    //Throttler t = new Throttler();
 
     // Add a DocumentListener to the text area's Document
     inputField.getDocument().addDocumentListener(new DocumentListener() {

@@ -1,12 +1,8 @@
 import java.awt.Graphics
 
-class Rectangle(args: String) extends DrawObject[] {
+class Rectangle(args: String) extends DrawObject[String] {
 
   override var arguments: String = args
-
-  def draw2(g: Graphics): Unit = {
-  }
-
 
   override def draw(context: DrawContext): Unit = {
 
