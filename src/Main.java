@@ -6,13 +6,6 @@ import java.awt.*;
 
 public class Main {
   public static void main(String[] args) {
-    // Test that command is correctly defined from the class name
-    BoundingBox b = new BoundingBox("(1 2) (3 4)");
-    System.out.println(b.command());
-
-    // Init painter
-    JComponent canvas = new JPanel();
-    Painter painter = new Painter(canvas);
 
     JFrame frame = new JFrame("Input and Display GUI");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,15 +15,21 @@ public class Main {
     // Left Panel: Display area
     JPanel leftPanel = new JPanel();
     leftPanel.setLayout(new BorderLayout());
-    canvas.setSize(400, 400);
+    // Canvas to draw on
+    JComponent canvas = new JPanel();
+    canvas.setPreferredSize(new Dimension(0, 400));
     canvas.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-    leftPanel.add(canvas);
+    leftPanel.add(canvas, BorderLayout.NORTH);
 
+    // Init painter
+    Painter painter = new Painter(canvas);
 
-    JTextArea errorBox = new JTextArea("Errors will appear here...");
+    JTextArea errorBox = new JTextArea();
     errorBox.setEditable(false);
+    errorBox.setPreferredSize(new Dimension(0, 100)); // Explicitly set a preferred size
     errorBox.setBackground(Color.LIGHT_GRAY);
-    leftPanel.add(new JScrollPane(errorBox), BorderLayout.CENTER);
+    leftPanel.add(new JScrollPane(errorBox), BorderLayout.SOUTH);
+    leftPanel.validate();
 
     // Right Panel: Input area
     JPanel rightPanel = new JPanel();
@@ -44,7 +43,7 @@ public class Main {
     frame.add(leftPanel, BorderLayout.CENTER);
     frame.add(rightPanel, BorderLayout.EAST);
 
-    //Throttler t = new Throttler();
+    inputField.setText("(BOUNDING-BOX (0 0) (30 30))");
 
     // Add a DocumentListener to the text area's Document
     inputField.getDocument().addDocumentListener(new DocumentListener() {
@@ -64,12 +63,8 @@ public class Main {
       }
 
       private void handleTextChange() {
-        // Debounce 500ms
-        // t.throttle(
-        //        () -> painter.paint(inputField.getText()),
-        //        3000
-        //);
         painter.paint(inputField.getText());
+        errorBox.setText(painter.context().formatErrors());
       }
     });
 

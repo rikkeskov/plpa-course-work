@@ -2,7 +2,7 @@ import java.awt.Graphics2D
 import javax.swing.JComponent
 
 class Painter(canvas: JComponent) {
-  private val context: DrawContext = new DrawContext(canvas.getGraphics.asInstanceOf[Graphics2D])
+  val context: DrawContext = new DrawContext(canvas.getGraphics.asInstanceOf[Graphics2D])
 
   private def parse(text: String): Array[DrawObject[_]] = {
     val objects: Array[DrawObject[_]] = Array()
@@ -24,11 +24,13 @@ class Painter(canvas: JComponent) {
           case s"(TEXT-AT $args)" => new TextAt(args);
           case s"(DRAW $args)" => new Draw(args);
           case s"(FILL $args)" => new Fill(args);
-          case s"($command $args)" => DrawException(s"Unknown command on Line $lineNumber: \"$command\" with args \"$args\"", null)
+          case s"($command $args)" => throw DrawException(s"Unknown command on Line $lineNumber: \"$command\" with args \"$args\"");
+          case s"($command)" => throw DrawException(s"Unknown command on Line $lineNumber: \"($command)\"");
+          case s"$text" => throw DrawException(s"Missing command structure \"( )\" at $lineNumber: \"$text\"");
         })
       } catch{
-        case DrawException(error, drawObject) => context.addError(drawObject, error);
-        case _ => System.out.println("Unknown error at line: " + (lineNumber + 1) + "\n" + s"\"$s\"");
+        case DrawException(error, drawObject) => context.addError(error, lineNumber, drawObject);
+        case e: Throwable => System.out.println("Unknown error at line: " + (lineNumber + 1) + "\n" + s"\"$s\"" + e.getCause);
       }
     }
 
@@ -36,13 +38,10 @@ class Painter(canvas: JComponent) {
   }
 
   def paint(text: String): Unit = {
+    context.resetContext()
     context.objects = this.parse(text)
 
-    context.objects :+ new BoundingBox("(0 0) (30 30)")
-
-
     for (obj <- context.objects)
-
       obj.draw(context)
 
   }

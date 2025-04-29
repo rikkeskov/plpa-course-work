@@ -11,7 +11,7 @@ class Line(args: String) extends DrawObject[Int] {
     context.graphics.drawPolygon(p)
     context.latestBoundingBox match {
       case Some(bb) => context.graphics.setClip(bb)
-      case None =>  context.addError(this, "Invalid drawing")
+      case None =>  throw DrawException("Missing Bounding-box", this)
     }
 
   }
