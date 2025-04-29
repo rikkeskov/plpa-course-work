@@ -20,7 +20,6 @@ public class Main {
     canvas.setPreferredSize(new Dimension(0, 400));
     canvas.setBorder(BorderFactory.createLineBorder(Color.GREEN));
     leftPanel.add(canvas, BorderLayout.NORTH);
-
     // Init painter
     Painter painter = new Painter(canvas);
 
@@ -44,6 +43,10 @@ public class Main {
     frame.add(rightPanel, BorderLayout.EAST);
 
     inputField.setText("(BOUNDING-BOX (0 0) (30 30))");
+    Throttler t = new Throttler();
+
+    // Make the frame visible
+    frame.setVisible(true);
 
     // Add a DocumentListener to the text area's Document
     inputField.getDocument().addDocumentListener(new DocumentListener() {
@@ -63,13 +66,14 @@ public class Main {
       }
 
       private void handleTextChange() {
-        painter.paint(inputField.getText());
-        errorBox.setText(painter.context().formatErrors());
+        t.throttle(() -> {
+          //painter.context().resetGraphics();
+          //painter.context().graphics().drawRect(0, 0, 10, 10);
+          painter.paint(inputField.getText());
+          errorBox.setText(painter.context().formatErrors());
+        }, 500);
       }
     });
-
-    // Make the frame visible
-    frame.setVisible(true);
   }
 
 }

@@ -15,6 +15,8 @@ class BoundingBox(text: String) extends DrawObject[Array[Int]] {
 
   override def draw(context: DrawContext): Unit = {
     context.graphics.setStroke(new BasicStroke(1.0f, CAP_ROUND, JOIN_ROUND, 1.0f, Array(1.0f, 1.0f), 0.5f))
+    context.graphics.setColor(color)
+    context.graphics.setBackground(fill)
     context.graphics.draw(shape)
     context.graphics.setClip(shape)
     context.latestBoundingBox = Some(shape)

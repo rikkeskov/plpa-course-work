@@ -5,7 +5,7 @@ class Painter(canvas: JComponent) {
   val context: DrawContext = new DrawContext(canvas.getGraphics.asInstanceOf[Graphics2D])
 
   private def parse(text: String): Array[DrawObject[_]] = {
-    val objects: Array[DrawObject[_]] = Array()
+    var objects: Array[DrawObject[_]] = Array()
 
     for ((s, lineNumber) <- text.split("\n").zipWithIndex) {
       // Commands in forms:
@@ -16,13 +16,13 @@ class Painter(canvas: JComponent) {
       // In case of command which adds a new object, add given drawing to the objects array
       // then in draw command use the arguments to find the given object from the array and assign it a color
       try{
-        objects :+ (s.trim match {
+        objects = objects :+ (s.trim match {
           case s"(BOUNDING-BOX $args)" => new BoundingBox(args);
           case s"(RECTANGLE $args)" => new Rectangle(args);
           case s"(LINE $args)" => new Line(args);
           case s"(CIRCLE $args)" => new Circle(args);
           case s"(TEXT-AT $args)" => new TextAt(args);
-          case s"(DRAW $args)" => new Draw(args);
+          case s"(COLOR $args)" => new ColorAction(args);
           case s"(FILL $args)" => new Fill(args);
           case s"($command $args)" => throw DrawException(s"Unknown command on Line $lineNumber: \"$command\" with args \"$args\"");
           case s"($command)" => throw DrawException(s"Unknown command on Line $lineNumber: \"($command)\"");
@@ -40,9 +40,9 @@ class Painter(canvas: JComponent) {
   def paint(text: String): Unit = {
     context.resetContext()
     context.objects = this.parse(text)
-
-    for (obj <- context.objects)
+    println(context.objects.mkString("Array(", ", ", ")"))
+    for (obj <- context.objects) {
       obj.draw(context)
-
+    }
   }
 }
