@@ -15,14 +15,12 @@ public class Main {
     // Left Panel: Display area
     JPanel leftPanel = new JPanel();
     leftPanel.setLayout(new BorderLayout());
-    // Canvas to draw on
-    JComponent canvas = new JPanel();
-    canvas.setPreferredSize(new Dimension(0, 400));
-    canvas.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-    leftPanel.add(canvas, BorderLayout.NORTH);
-    // Init painter
-    Painter painter = new Painter(canvas);
 
+    // Canvas to draw on
+    CustomPanel canvas = new CustomPanel();
+    leftPanel.add(canvas, BorderLayout.NORTH);
+
+    // Error box
     JTextArea errorBox = new JTextArea();
     errorBox.setEditable(false);
     errorBox.setPreferredSize(new Dimension(0, 100)); // Explicitly set a preferred size
@@ -42,7 +40,8 @@ public class Main {
     frame.add(leftPanel, BorderLayout.CENTER);
     frame.add(rightPanel, BorderLayout.EAST);
 
-    inputField.setText("(BOUNDING-BOX (0 0) (30 30))");
+    inputField.setText("(CIRCLE (20 20) 10)");
+    //inputField.setText("(BOUNDING-BOX (0 0) (30 30))");
     Throttler t = new Throttler();
 
     // Make the frame visible
@@ -67,10 +66,8 @@ public class Main {
 
       private void handleTextChange() {
         t.throttle(() -> {
-          //painter.context().resetGraphics();
-          //painter.context().graphics().drawRect(0, 0, 10, 10);
-          painter.paint(inputField.getText());
-          errorBox.setText(painter.context().formatErrors());
+          canvas.repaint(inputField.getText());
+          errorBox.setText(canvas.getPainter().getContext().formatErrors());
         }, 500);
       }
     });

@@ -2,7 +2,7 @@ import java.awt.Graphics2D
 import javax.swing.JComponent
 
 class Painter(canvas: JComponent) {
-  val context: DrawContext = new DrawContext(canvas.getGraphics.asInstanceOf[Graphics2D])
+  private var context: DrawContext = new DrawContext(null) // Initialize with null graphics
 
   private def parse(text: String): Array[DrawObject[_]] = {
     var objects: Array[DrawObject[_]] = Array()
@@ -37,7 +37,8 @@ class Painter(canvas: JComponent) {
     return objects
   }
 
-  def paint(text: String): Unit = {
+  def paint(text: String, g: Graphics2D): Unit = {
+    context.graphics = g // Update the graphics object
     context.resetContext()
     context.objects = this.parse(text)
     println(context.objects.mkString("Array(", ", ", ")"))
@@ -45,4 +46,6 @@ class Painter(canvas: JComponent) {
       obj.draw(context)
     }
   }
+
+  def getContext: DrawContext = context // Add a getter for the context
 }
