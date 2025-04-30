@@ -33,6 +33,8 @@ public class Main {
     rightPanel.setLayout(new BorderLayout());
     rightPanel.setPreferredSize(new Dimension(250, 0)); // Explicitly set a preferred size
     JTextArea inputField = new JTextArea();
+    inputField.setLineWrap(true);
+    inputField.setWrapStyleWord(true);
     JScrollPane scrollPane = new JScrollPane(inputField);
     rightPanel.add(scrollPane, BorderLayout.CENTER);
 
@@ -74,6 +76,7 @@ public class Main {
             (CIRCLE (20 20) 20)
             (LINE (5 5) (40 20))
             (RECTANGLE (5 5) (20 20))
+            (TEXT-AT (25 10) this text wraps and clips if you make it long enough.)
             (BOUNDING-BOX (10 10) (40 40))
             (CIRCLE (25 25) 10)""");
   }

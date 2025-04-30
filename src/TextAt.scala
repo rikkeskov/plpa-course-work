@@ -1,4 +1,4 @@
-import java.awt.{Color, Shape}
+import java.awt.{Color, Shape, Font}
 import javax.swing.plaf.basic.BasicTextUI.BasicCaret
 
 class TextAt(args: String) extends DrawObject[Array[Any]] {
@@ -11,10 +11,14 @@ class TextAt(args: String) extends DrawObject[Array[Any]] {
   override val fill: Color = new Color(0, 0, 0, 0)
   override val shape: Shape = new BasicCaret
 
-  private val Location: (Int, Int) = (arguments(0).toString.toInt, arguments(1).toString.toInt)
-  private val Text: String = arguments(2).toString
+  private val x0: Int = arguments(0).asInstanceOf[Int] * 10
+  private val y0: Int = arguments(1).asInstanceOf[Int] * 10
+  private val text: String = arguments(2).asInstanceOf[String]
 
   override def draw(context: DrawContext): Unit = {
-    context.graphics.drawString(Text, Location._1, Location._2)
+    val g = context.graphics
+    g.setColor(color)
+    g.setFont(new Font("TimesRoman", Font.PLAIN, 12))
+    g.drawString(text, x0, y0)
   }
 }
