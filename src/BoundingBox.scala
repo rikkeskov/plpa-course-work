@@ -8,20 +8,21 @@ class BoundingBox(text: String) extends DrawObject[Array[Int]] {
     case s"($arg1 $arg2) ($arg3 $arg4)" => Array(arg1.toInt, arg2.toInt, arg3.toInt, arg4.toInt)
     case s => throw DrawException(s"Cant match arguments to $command: $s", this)
   }
+
+  override val fill: Color = new Color(0, 0, 0, 0)
   override val shape: Shape = new Rectangle(arguments(0) * 10, arguments(1) * 10, (arguments(2) - arguments(0)) * 10, (arguments(3) - arguments(1)) * 10)
 
-  override val color: Color = new Color(0, 0, 0)
-  override val fill: Color = new Color(0, 0, 0, 0)
-
   override def draw(context: DrawContext): Unit = {
-    context.graphics.setStroke(new BasicStroke(1.0f, CAP_ROUND, JOIN_ROUND, 1.0f, Array(1.0f, 1.0f), 0.5f))
-    context.graphics.setColor(color)
-    context.graphics.setBackground(fill)
-    context.graphics.draw(shape)
-    context.graphics.setClip(shape)
+    val g = context.graphics
+
+    g.setStroke(new BasicStroke(1.0f, CAP_ROUND, JOIN_ROUND, 1.0f, Array(1.0f, 1.0f), 0.5f))
+    g.setColor(color)
+    g.setBackground(fill)
+    g.draw(shape)
+    g.setClip(shape)
     context.latestBoundingBox = Some(shape)
 
     // Reset stroke for next drawing
-    context.graphics.setStroke(new BasicStroke())
+    g.setStroke(new BasicStroke())
   }
 }

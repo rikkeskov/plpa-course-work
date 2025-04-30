@@ -7,7 +7,6 @@ class Circle(text: String) extends DrawObject[Array[Int]] {
     case _ => throw DrawException(s"Cant match arguments to $command", this)
   }
 
-  override val color: Color = new Color(0, 0, 0)
   override val fill: Color = new Color(0, 0, 0, 0)
 
   private val x0: Int = arguments(0) * 10

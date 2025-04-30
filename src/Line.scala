@@ -9,9 +9,6 @@ class Line(text: String) extends DrawObject[Array[Int]] {
     case _ => throw DrawException(s"Cant match arguments to $command", this)
   }
 
-  override val color: Color = new Color(0, 0, 0)
-  override val fill: Color = new Color(0, 0, 0, 0)
-
   private val x1: Int = arguments(0) * 10
   private val y1: Int = arguments(1) * 10
   private val x2: Int = arguments(2) * 10

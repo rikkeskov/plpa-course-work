@@ -7,9 +7,6 @@ class TextAt(args: String) extends DrawObject[Array[Any]] {
     case s"($arg1 $arg2) $arg3" => Array(arg1.toInt, arg2.toInt, arg3)
     case _ => throw DrawException(s"Cant match arguments to $command", this)
   }
-  override val color: Color = new Color(0, 0, 0)
-  override val fill: Color = new Color(0, 0, 0, 0)
-  override val shape: Shape = new BasicCaret
 
   private val x0: Int = arguments(0).asInstanceOf[Int] * 10
   private val y0: Int = arguments(1).asInstanceOf[Int] * 10
@@ -17,6 +14,7 @@ class TextAt(args: String) extends DrawObject[Array[Any]] {
 
   override def draw(context: DrawContext): Unit = {
     val g = context.graphics
+
     g.setColor(color)
     g.setFont(new Font("TimesRoman", Font.PLAIN, 12))
     g.drawString(text, x0, y0)
