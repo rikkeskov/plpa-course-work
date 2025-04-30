@@ -11,7 +11,7 @@ public class CustomPanel extends JPanel {
     int gridSize = 10;
 
     public CustomPanel() {
-        setPreferredSize(new Dimension(panelWidth, panelHeight));
+        //setPreferredSize(new Dimension(panelWidth, panelHeight));
         setBackground(Color.WHITE);
 
         this.painter = new Painter(this);
@@ -23,22 +23,17 @@ public class CustomPanel extends JPanel {
 
         // Draw grid
         g.setColor(Color.LIGHT_GRAY);
-
-        // Draw vertical lines
         for (int x = 0; x < panelWidth; x += gridSize) {
             g.drawLine(x, 0, x, panelHeight);
         }
-
-        // Draw horizontal lines
         for (int y = 0; y < panelHeight; y += gridSize) {
             g.drawLine(0, y, panelWidth, y);
         }
 
         Graphics2D g2d = (Graphics2D) g;
 
-        if (textToDraw != null) {
-            painter.paint(textToDraw, g2d);
-        }
+        // Add our painter with the text from inputField to draw
+        painter.paint(textToDraw, g2d);
 
     }
 

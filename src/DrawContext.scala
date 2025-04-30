@@ -1,8 +1,8 @@
-import java.awt.{Color, Graphics2D, Shape}
+import java.awt.{Graphics2D, Rectangle, Shape}
 
-class DrawContext(var graphics: Graphics2D) {
+class DrawContext(var graphics: Graphics2D = null) {
   var objects: Array[DrawObject[_]] = Array()
-  var latestBoundingBox: Option[Shape] = None
+  var latestBoundingBox: Option[Shape] = Some(new Rectangle(-1000, -1000, 2000, 2000))
   private var errors: Array[(Int, String)] = Array()
 
   def addError(error: String, lineNumber: Int, obj: DrawObject[_]): Unit = {
@@ -16,14 +16,6 @@ class DrawContext(var graphics: Graphics2D) {
   def resetContext(): Unit = {
     errors = Array()
     objects = Array()
-    latestBoundingBox = None
-  }
-
-  def resetGraphics(): Unit = {
-    graphics.setColor(Color.WHITE)
-    graphics.setBackground(Color.WHITE)
-    graphics.fillRect(-1000, -1000, 2000, 2000)
-    graphics.setColor(new Color(0, 0, 0))
-    graphics.setBackground(new Color(0, 0, 0, 0))
+    latestBoundingBox = Some(new Rectangle(-1000, -1000, 2000, 2000))
   }
 }

@@ -18,7 +18,7 @@ public class Main {
 
     // Canvas to draw on
     CustomPanel canvas = new CustomPanel();
-    leftPanel.add(canvas, BorderLayout.NORTH);
+    leftPanel.add(canvas, BorderLayout.CENTER);
 
     // Error box
     JTextArea errorBox = new JTextArea();
@@ -40,8 +40,6 @@ public class Main {
     frame.add(leftPanel, BorderLayout.CENTER);
     frame.add(rightPanel, BorderLayout.EAST);
 
-    inputField.setText("(CIRCLE (20 20) 10)");
-    //inputField.setText("(BOUNDING-BOX (0 0) (30 30))");
     Throttler t = new Throttler();
 
     // Make the frame visible
@@ -68,9 +66,16 @@ public class Main {
         t.throttle(() -> {
           canvas.repaint(inputField.getText());
           errorBox.setText(canvas.getPainter().getContext().formatErrors());
-        }, 500);
+        }, 50);
       }
     });
+    inputField.setText("""
+            (BOUNDING-BOX (0 0) (30 30))
+            (CIRCLE (20 20) 20)
+            (LINE (5 5) (40 20))
+            (RECTANGLE (5 5) (20 20))
+            (BOUNDING-BOX (10 10) (40 40))
+            (CIRCLE (25 25) 10)""");
   }
 
 }

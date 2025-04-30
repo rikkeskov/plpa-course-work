@@ -2,7 +2,7 @@ import java.awt.Graphics2D
 import javax.swing.JComponent
 
 class Painter(canvas: JComponent) {
-  private var context: DrawContext = new DrawContext(null) // Initialize with null graphics
+  private var context: DrawContext = new DrawContext() // Initialize with null graphics
 
   private def parse(text: String): Array[DrawObject[_]] = {
     var objects: Array[DrawObject[_]] = Array()
@@ -42,8 +42,24 @@ class Painter(canvas: JComponent) {
     context.resetContext()
     context.objects = this.parse(text)
     println(context.objects.mkString("Array(", ", ", ")"))
+
     for (obj <- context.objects) {
-      obj.draw(context)
+      try {
+        if ( obj.isInstanceOf[BoundingBox] ) {
+          context.graphics.setClip(null)
+        }
+        else {
+          context.latestBoundingBox match {
+            case Some(box) =>
+              context.graphics.setClip(box);
+            case None =>  throw DrawException("Missing Bounding-box", null)
+          }
+        }
+        obj.draw(context)
+      } catch {
+        case DrawException(error, drawObject) => context.addError(error, 0, drawObject); // todo add line context to objects
+        case e: Throwable => System.out.println("Unknown error at line: " + (0 + 1) + "\n" + e.getCause);
+      }
     }
   }
 

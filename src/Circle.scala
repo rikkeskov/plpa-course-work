@@ -18,6 +18,7 @@ class Circle(text: String) extends DrawObject[Array[Int]] {
     val g = context.graphics
     g.setColor(color)
 
+    // Variables for the Midpoint Circle Algorithm
     var f: Int = 1 - radius
     var ddF_x: Int = 1
     var ddF_y: Int = - 2 * radius
@@ -30,6 +31,7 @@ class Circle(text: String) extends DrawObject[Array[Int]] {
     g.drawLine(x0 + radius, y0, x0 + radius, y0)
     g.drawLine(x0 - radius, y0, x0 - radius, y0)
 
+    // Midpoint Circle Algorithm
     while (x < y) {
       if (f >= 0) {
         y -= 1
@@ -49,11 +51,5 @@ class Circle(text: String) extends DrawObject[Array[Int]] {
       g.drawLine(x0 + y, y0 - x, x0 + y, y0 - x)
       g.drawLine(x0 - y, y0 - x, x0 - y, y0 - x)
     }
-
-    // this fails the program if drawn before bounding box, which is currently the only way to view the circle
-    //context.latestBoundingBox match {
-    //  case Some(bb) => context.graphics.setClip(bb)
-    //  case None =>  throw DrawException("Missing Bounding-box", this)
-    //}
   }
 }
