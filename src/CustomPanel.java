@@ -10,7 +10,7 @@ public class CustomPanel extends JPanel {
     public CustomPanel() {
         setBackground(Color.WHITE);
 
-        this.painter = new Painter(this);
+        this.painter = new Painter();
     }
 
     @Override
@@ -40,6 +40,7 @@ public class CustomPanel extends JPanel {
 
         // Add our painter with the text from inputField to draw
         painter.paint(textToDraw, g2d);
+        g2d.clipRect(0, 0, panelWidth, panelHeight);
 
     }
 

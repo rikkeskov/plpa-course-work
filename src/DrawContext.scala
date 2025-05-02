@@ -4,7 +4,7 @@ class DrawContext(var graphics: Graphics2D = null) {
   var objects: Array[DrawObject[_]] = Array()
   var ColorableObjects: Array[DrawObject[_]] = Array()
   var FillableObjects: Array[DrawObject[_]] = Array()
-  var latestBoundingBox: Option[Shape] = Some(new Rectangle(-1000, -1000, 2000, 2000))
+  var latestBoundingBox: Option[Shape] = None
   private var errors: Array[(Int, String)] = Array()
   private var currentColor: Color = Color.BLACK
 

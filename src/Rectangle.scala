@@ -1,4 +1,4 @@
-import java.awt.Color
+import java.awt.Shape
 
 class Rectangle(text: String) extends DrawObject[Array[Int]] with Colorable with Fillable {
 
@@ -7,25 +7,13 @@ class Rectangle(text: String) extends DrawObject[Array[Int]] with Colorable with
     case _ => throw DrawException(s"Cant match arguments to $command", this)
   }
 
-  override val fill: Color = new Color(0, 0, 0, 0)
-
-  private val x1: Int = arguments(0)
-  private val y1: Int = arguments(1)
-  private val x2: Int = arguments(2)
-  private val y2: Int = arguments(3)
-
   override def draw(context: DrawContext): Unit = {
-    val topLine = new Line(s"($x1 $y1) ($x2 $y1)")
-    topLine.color = color
-    topLine.draw(context)
-    val rightLine = new Line(s"($x2 $y1) ($x2 $y2)")
-    rightLine.color = color
-    rightLine.draw(context)
-    val bottomLine = new Line(s"($x2 $y2) ($x1 $y2)")
-    bottomLine.color = color
-    bottomLine.draw(context)
-    val leftLine = new Line(s"($x1 $y2) ($x1 $y1)")
-    leftLine.color = color
-    leftLine.draw(context)
+    val g = context.graphics
+    val shape: Shape = new java.awt.Rectangle(arguments(0) * 10, arguments(1) * 10, (arguments(2) - arguments(0)) * 10, (arguments(3) - arguments(1)) * 10)
+
+    g.setColor(fill)
+    g.fill(shape)
+    g.setColor(color)
+    g.draw(shape)
   }
 }

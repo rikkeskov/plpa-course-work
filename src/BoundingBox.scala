@@ -9,15 +9,14 @@ class BoundingBox(text: String) extends DrawObject[Array[Int]] with Colorable wi
     case s => throw DrawException(s"Cant match arguments to $command: $s", this)
   }
 
-  override val fill: Color = new Color(0, 0, 0, 0)
-
   override def draw(context: DrawContext): Unit = {
     val g = context.graphics
     val shape: Shape = new Rectangle(arguments(0) * 10, arguments(1) * 10, (arguments(2) - arguments(0)) * 10, (arguments(3) - arguments(1)) * 10)
 
+    g.setColor(fill)
+    g.fill(shape)
     g.setColor(color)
     g.setStroke(new BasicStroke(2f, CAP_ROUND, JOIN_ROUND, 1.0f, Array(3.1f, 5.1f), 0.5f))
-    g.setBackground(fill)
     g.draw(shape)
     g.setClip(shape)
     context.latestBoundingBox = Some(shape)

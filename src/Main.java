@@ -42,8 +42,6 @@ public class Main {
     frame.add(leftPanel, BorderLayout.CENTER);
     frame.add(rightPanel, BorderLayout.EAST);
 
-    Throttler t = new Throttler();
-
     // Make the frame visible
     frame.setVisible(true);
 
@@ -65,10 +63,8 @@ public class Main {
       }
 
       private void handleTextChange() {
-        t.throttle(() -> {
-          canvas.repaint(inputField.getText());
-          errorBox.setText(canvas.getPainter().getContext().formatErrors());
-        }, 50);
+        canvas.repaint(inputField.getText());
+        errorBox.setText(canvas.getPainter().getContext().formatErrors());
       }
     });
     inputField.setText("""

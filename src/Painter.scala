@@ -1,7 +1,7 @@
 import java.awt.Graphics2D
 import javax.swing.JComponent
 
-class Painter(canvas: JComponent) {
+class Painter() {
   private var context: DrawContext = new DrawContext() // Initialize with null graphics
 
   private def parse(text: String): Array[DrawObject[_]] = {
