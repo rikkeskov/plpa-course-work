@@ -1,11 +1,15 @@
 import java.awt.{Color, Shape}
 
+trait Colorable
+
+trait Fillable
+
+trait Action
+
 abstract class DrawObject[T]{
   var arguments: T
   var color: Color = new Color(0, 0, 0)
-  val fill: Color = new Color(0,0,0,0)
-
-  val shape: Shape = null
+  val fill: Color = new Color(0, 0, 0, 0)
 
   val command: String = getClass.getName.tail.foldLeft(getClass.getName.head.toString) {
     case (acc, char) if char.isUpper => acc + "-" + char

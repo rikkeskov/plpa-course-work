@@ -5,13 +5,9 @@ public class CustomPanel extends JPanel {
     private final Painter painter;
     private String textToDraw;
 
-    int panelHeight = 400;
-    int panelWidth = 600;
-
     int gridSize = 10;
 
     public CustomPanel() {
-        //setPreferredSize(new Dimension(panelWidth, panelHeight));
         setBackground(Color.WHITE);
 
         this.painter = new Painter(this);
@@ -19,18 +15,28 @@ public class CustomPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        // Draw grid
-        g.setColor(Color.LIGHT_GRAY);
-        for (int x = 0; x < panelWidth; x += gridSize) {
-            g.drawLine(x, 0, x, panelHeight);
-        }
-        for (int y = 0; y < panelHeight; y += gridSize) {
-            g.drawLine(0, y, panelWidth, y);
-        }
+        //super.paintComponent(g);
+        int panelHeight = getHeight();
+        int panelWidth = getWidth();
 
         Graphics2D g2d = (Graphics2D) g;
+
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_DEFAULT);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+        g2d.setColor(Color.white);
+        g2d.fillRect(0, 0, panelWidth, panelHeight);
+        // Draw grid
+        g2d.setColor(Color.LIGHT_GRAY);
+
+        for (int x = 0; x < panelWidth; x += gridSize) {
+            g2d.drawLine(x, 0, x, panelHeight);
+        }
+        for (int y = 0; y < panelHeight; y += gridSize) {
+            g2d.drawLine(0, y, panelWidth, y);
+        }
+
+
 
         // Add our painter with the text from inputField to draw
         painter.paint(textToDraw, g2d);

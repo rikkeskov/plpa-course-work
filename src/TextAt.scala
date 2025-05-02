@@ -1,7 +1,7 @@
 import java.awt.{Color, Shape, Font}
 import javax.swing.plaf.basic.BasicTextUI.BasicCaret
 
-class TextAt(args: String) extends DrawObject[Array[Any]] {
+class TextAt(args: String) extends DrawObject[Array[Any]] with Colorable {
 
   override var arguments: Array[Any] = args match {
     case s"($arg1 $arg2) $arg3" => Array(arg1.toInt, arg2.toInt, arg3)
@@ -16,7 +16,7 @@ class TextAt(args: String) extends DrawObject[Array[Any]] {
     val g = context.graphics
 
     g.setColor(color)
-    g.setFont(new Font("TimesRoman", Font.PLAIN, 12))
+    g.setFont(new Font("TimesRoman", Font.BOLD, 12))
     g.drawString(text, x0, y0)
   }
 }

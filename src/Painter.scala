@@ -23,7 +23,7 @@ class Painter(canvas: JComponent) {
           case s"(CIRCLE $args)" => new Circle(args);
           case s"(TEXT-AT $args)" => new TextAt(args);
           case s"(COLOR $args)" => new ColorAction(args);
-          case s"(FILL $args)" => new Fill(args);
+          case s"(FILL $args)" => new FillAction(args);
           case s"($command $args)" => throw DrawException(s"Unknown command on Line $lineNumber: \"$command\" with args \"$args\"");
           case s"($command)" => throw DrawException(s"Unknown command on Line $lineNumber: \"($command)\"");
           case s"$text" => throw DrawException(s"Missing command structure \"( )\" at $lineNumber: \"$text\"");
@@ -39,28 +39,41 @@ class Painter(canvas: JComponent) {
 
   def paint(text: String, g: Graphics2D): Unit = {
     context.graphics = g // Update the graphics object
+
     context.resetContext()
     context.objects = this.parse(text)
     println(context.objects.mkString("Array(", ", ", ")"))
 
-    for (obj <- context.objects) {
-      try {
-        if ( obj.isInstanceOf[BoundingBox] ) {
-          context.graphics.setClip(null)
-        }
-        else {
-          context.latestBoundingBox match {
-            case Some(box) =>
-              context.graphics.setClip(box);
-            case None =>  throw DrawException("Missing Bounding-box", null)
-          }
-        }
-        obj.draw(context)
-      } catch {
-        case DrawException(error, drawObject) => context.addError(error, 0, drawObject); // todo add line context to objects
-        case e: Throwable => System.out.println("Unknown error at line: " + (0 + 1) + "\n" + e.getCause);
-      }
+    val mappedObjects = context.objects.groupBy {
+      case _: DrawObject[_] with Action => "action"
+      case _ => "object"
     }
+    val objects = mappedObjects.getOrElse("object", Array())
+    val actions = mappedObjects.getOrElse("action", Array())
+    context.ColorableObjects = objects
+    actions.foreach(a => try {
+      a.draw(context)
+    } catch {
+      case DrawException(error, drawObject) => context.addError(error, 0, drawObject); // todo add line context to objects
+      case e: Throwable => System.out.println("Unknown error at line: " + (0 + 1) + "\n" + e.getCause);
+    })
+
+    context.ColorableObjects.foreach(obj => try {
+      if ( obj.isInstanceOf[BoundingBox] ) {
+        context.graphics.setClip(null)
+      }
+      else {
+        context.latestBoundingBox match {
+          case Some(box) =>
+            context.graphics.setClip(box);
+          case None =>  throw DrawException("Missing Bounding-box", null)
+        }
+      }
+      obj.draw(context)
+    } catch {
+      case DrawException(error, drawObject) => context.addError(error, 0, drawObject); // todo add line context to objects
+      case e: Throwable => System.out.println("Unknown error at line: " + (0 + 1) + "\n" + e.getCause);
+    })
   }
 
   def getContext: DrawContext = context // Add a getter for the context

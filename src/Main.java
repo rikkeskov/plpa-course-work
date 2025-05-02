@@ -9,7 +9,7 @@ public class Main {
 
     JFrame frame = new JFrame("Input and Display GUI");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(800, 500);
+    frame.setSize(800, 600);
     frame.setLayout(new BorderLayout());
 
     // Left Panel: Display area
