@@ -2,7 +2,7 @@ import java.awt.Color
 
 import scala.util.control.Breaks._
 
-class Line(text: String) extends DrawObject[Array[Int]] with Colorable {
+class Line(text: String) extends DrawObject[Array[Int]] with Object with Colorable {
 
   override var arguments: Array[Int] = text match {
     case s"($arg1 $arg2) ($arg3 $arg4)" => Array(arg1.toInt, arg2.toInt, arg3.toInt, arg4.toInt)

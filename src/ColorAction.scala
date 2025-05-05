@@ -23,13 +23,12 @@ class ColorAction(args: String) extends DrawObject[Array[Any]] with Action {
     }
   }
 
-  override def draw(context: DrawContext): Unit = {
+  override def draw(context: DrawContext, objects: Array[(DrawObject[_], Int)]): Unit = {
     idx.foreach(element => {
-      if (context.ColorableObjects.length < element - 1) {
-        throw DrawException(s"Object $element does not exist, maximum object value is ${context.ColorableObjects.length}")
+      if (objects.length < element - 1) {
+        throw DrawException(s"Object $element does not exist, maximum object value is ${objects.length}")
       } else {
-        val obj = context.ColorableObjects.apply(element-1)
-        obj.color = parseColor(arguments(0).asInstanceOf[String])
+        objects.apply(element-1)._1.color = parseColor(arguments(0).asInstanceOf[String])
       }
     })
   }

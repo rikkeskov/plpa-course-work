@@ -2,7 +2,7 @@ import java.awt.{BasicStroke, Color, Rectangle, Shape}
 import java.awt.BasicStroke.{CAP_ROUND, JOIN_ROUND}
 
 
-class BoundingBox(text: String) extends DrawObject[Array[Int]] with Colorable with Fillable {
+class BoundingBox(text: String) extends DrawObject[Array[Int]] with Object with Colorable with Fillable {
 
   override var arguments: Array[Int] = text match {
     case s"($arg1 $arg2) ($arg3 $arg4)" => Array(arg1.toInt, arg2.toInt, arg3.toInt, arg4.toInt)

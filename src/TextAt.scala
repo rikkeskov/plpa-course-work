@@ -1,7 +1,7 @@
-import java.awt.{Color, Shape, Font}
-import javax.swing.plaf.basic.BasicTextUI.BasicCaret
+import java.awt.geom.AffineTransform
+import java.awt.{Color, Font, Shape}
 
-class TextAt(args: String) extends DrawObject[Array[Any]] with Colorable {
+class TextAt(args: String) extends DrawObject[Array[Any]] with Object with Colorable {
 
   override var arguments: Array[Any] = args match {
     case s"($arg1 $arg2) $arg3" => Array(arg1.toInt, arg2.toInt, arg3)
@@ -15,8 +15,21 @@ class TextAt(args: String) extends DrawObject[Array[Any]] with Colorable {
   override def draw(context: DrawContext): Unit = {
     val g = context.graphics
 
+    val originalTransform: AffineTransform = g.getTransform
+
+    // Revert the transformation
+    g.setTransform(new AffineTransform(1, 0, 0, 1, 0, 0))
+
+    // Translate to the correct position
+    g.translate(x0, context.height - y0)
+
+    // Draw the text
     g.setColor(color)
     g.setFont(new Font("TimesRoman", Font.BOLD, 12))
-    g.drawString(text, x0, y0)
+    g.drawString(text, 0, 0)
+
+    // Restore the original transformation state
+    g.setTransform(originalTransform)
+
   }
 }

@@ -1,7 +1,7 @@
 import java.awt.Color
 import java.awt.geom.{AffineTransform, Path2D, PathIterator, Rectangle2D}
 
-class Circle(text: String) extends DrawObject[Array[Int]] with Colorable with Fillable {
+class Circle(text: String) extends DrawObject[Array[Int]] with Object with Colorable with Fillable {
 
   override var arguments: Array[Int] = text match {
     case s"($arg1 $arg2) $arg3" => Array(arg1.toInt, arg2.toInt, arg3.toInt)

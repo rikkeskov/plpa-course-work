@@ -9,13 +9,13 @@ public class CustomPanel extends JPanel {
 
     public CustomPanel() {
         setBackground(Color.WHITE);
-
         this.painter = new Painter();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         //super.paintComponent(g);
+        // We repaint the component each time
         int panelHeight = getHeight();
         int panelWidth = getWidth();
 
@@ -35,13 +35,15 @@ public class CustomPanel extends JPanel {
         for (int y = 0; y < panelHeight; y += gridSize) {
             g2d.drawLine(0, y, panelWidth, y);
         }
-
-
+        // Scale the y-axis the other way so Y moves upwards
+        g2d.scale(1, -1);
+        // Translate the 0,0 to bottom left corner.
+        g2d.translate(0, -panelHeight);
+        painter.getContext().setSize(panelHeight, panelWidth);
 
         // Add our painter with the text from inputField to draw
         painter.paint(textToDraw, g2d);
         g2d.clipRect(0, 0, panelWidth, panelHeight);
-
     }
 
     public void repaint(String text) {
@@ -49,8 +51,6 @@ public class CustomPanel extends JPanel {
         super.repaint();
     }
 
-    public Painter getPainter() {
-        return painter;
-    }
+    public Painter getPainter() { return painter; }
 
 }

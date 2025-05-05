@@ -4,7 +4,12 @@ trait Colorable
 
 trait Fillable
 
-trait Action
+trait Action {
+  def draw(context: DrawContext, objects: Array[(DrawObject[_], Int)]): Unit
+}
+trait Object {
+  def draw(context: DrawContext): Unit
+}
 
 abstract class DrawObject[T]{
   var arguments: T
@@ -15,6 +20,4 @@ abstract class DrawObject[T]{
     case (acc, char) if char.isUpper => acc + "-" + char
     case (acc, char) => acc + char
   }.toUpperCase
-
-  def draw(context: DrawContext): Unit
 };
