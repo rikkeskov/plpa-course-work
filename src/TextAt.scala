@@ -18,17 +18,32 @@ class TextAt(args: String) extends DrawObject[Array[Any]] with Object with Color
     val originalTransform: AffineTransform = g.getTransform
 
     // Revert the transformation
-    g.setTransform(new AffineTransform(1, 0, 0, 1, 0, 0))
+    //g.setTransform(new AffineTransform(1, 0, 0, 1, 0, 0))
 
     // Translate to the correct position
-    g.translate(x0, context.height - y0)
-
-    // Draw the text
+    //g.translate(x0, context.height - y0)
     g.setColor(color)
     g.setFont(new Font("TimesRoman", Font.BOLD, 12))
-    g.drawString(text, 0, 0)
 
-    // Restore the original transformation state
+    // Translate to where you want the text anchor point to be
+    g.translate(x0, y0)
+
+    // Step 2: Flip horizontally using scale(-1, 1)// Step 2: Flip horizontally using scale(-1, 1)
+    g.scale(-1, 1)
+
+    // Step 3: Draw string at (0, 0) — but because of the horizontal flip,
+    // we need to shift it back by its width to align correctly.
+    val fm = g.getFontMetrics
+    //val text = "Horizontally Flipped"
+    val textWidth = fm.stringWidth(text)
+
+    // Rotate 180 degrees (PI radians) around that point to flip the text
+    g.rotate(Math.PI)
+    print(textWidth.toString + " - ")
+    // Draw the text With its correct anchor point
+    g.drawString(text, -(textWidth/2), 0)
+
+    // Restore original transform
     g.setTransform(originalTransform)
 
   }
