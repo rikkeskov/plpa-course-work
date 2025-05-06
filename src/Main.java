@@ -89,7 +89,7 @@ public class Main {
             (RECTANGLE (34 10) (36 16))
             (RECTANGLE (37 10) (39 18))
             # Trendline
-            (LINE (11 37) (39 15))
+            (LINE (11 38) (38 17))
             # Top lines
             (LINE (11 39) (14 31))
             (LINE (14 31) (17 36))
@@ -142,8 +142,24 @@ public class Main {
             #(TEXT-AT (8 44) 34)
             #(TEXT-AT (8 46) 36)
             (FILL blue 8 9 10 11 12 13 14 15 16 17)
-            (COLOR red 18)
+            (COLOR green 18)
             (COLOR magenta 19 20 21 22 23 24 25 26 27)
+            # here begins the pie chart
+            (BOUNDING-BOX (50 1) (100 50))
+            (CIRCLE (75 25) 20)
+            (TEXT-AT (75 47) This is the pie chart of my 2025 running statistics)
+            (LINE (75 25) (75 45))
+            (TEXT-AT (82 35) January 21%)
+            (LINE (75 25) (93 33))
+            (TEXT-AT (84 22) February 23%)
+            (LINE (75 25) (84 7))
+            (TEXT-AT (75 9) March 18%)
+            (LINE (75 25) (63 9))
+            (TEXT-AT (64 18) April 25%)
+            (LINE (75 25) (60 38))
+            (TEXT-AT (70 33) May 11%)
+            (FILL red 60)
+            (RECTANGLE (53 3) (97 47))
             """);
   }
 
