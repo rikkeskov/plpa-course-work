@@ -7,10 +7,10 @@ class FillAction(args: String) extends DrawObject[Array[Any]] with Action {
     case _ => throw DrawException(s"Cant match arguments to $command", this)
   }
 
-  private val idx: Array[Int] = arguments(1).asInstanceOf[String].split(" ").map(_.toInt)
+  private val idx: Array[Int] = arguments(1).asInstanceOf[String].trim.split(" ").map(_.toInt)
 
   private def parseColor(colorStr: String): Color = {
-    colorStr.toLowerCase match {
+    colorStr.trim.toLowerCase match {
       case "red" => Color.RED
       case "green" => Color.GREEN
       case "blue" => Color.BLUE

@@ -39,7 +39,6 @@ public class CustomPanel extends JPanel {
         g2d.scale(1, -1);
         // Translate the 0,0 to bottom left corner.
         g2d.translate(0, -panelHeight);
-        painter.getContext().setSize(panelHeight, panelWidth);
 
         // Add our painter with the text from inputField to draw
         painter.paint(textToDraw, g2d);

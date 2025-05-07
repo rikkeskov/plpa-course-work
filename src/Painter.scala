@@ -30,7 +30,7 @@ class Painter {
           })
         } catch {
           case DrawException(error, drawObject) => context.addError(error, lineNumber, drawObject);
-          case e: Throwable => System.out.println("Unknown error at line: " + (lineNumber + 1) + "\n" + s"\"$s\"" + e.getCause);
+          case e: Throwable => System.out.println("Unknown parsing error at line: " + (lineNumber + 1) + "\n" + s"\"$s\"" + e.getCause + "\n" + e.toString);
         }
       }
     }
@@ -54,7 +54,7 @@ class Painter {
       a.draw(context, objects)
     } catch {
       case DrawException(error, drawObject) => context.addError(error, lineNumber, drawObject);
-      case e: Throwable => System.out.println("Unknown error at line: " + (lineNumber + 1) + "\n" + e.getCause);
+      case e: Throwable => System.out.println("Unknown action error at line: " + (lineNumber + 1) + "\n" + e.getCause + "\n" + e.toString);
     }}
 
     objects.foreach{case (obj: DrawObject[_] with Object, lineNumber) => try {
@@ -71,7 +71,7 @@ class Painter {
       obj.draw(context)
     } catch {
       case DrawException(error, drawObject) => context.addError(error, lineNumber, drawObject);
-      case e: Throwable => System.out.println("Unknown error at line: " + (lineNumber + 1) + "\n" + e.getCause);
+      case e: Throwable => System.out.println("Unknown object error at line: " + (lineNumber + 1) + "\n" + e.getCause + "\n" + e.toString);
     }}
   }
 

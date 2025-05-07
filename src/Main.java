@@ -159,6 +159,7 @@ public class Main {
             (LINE (75 25) (60 38))
             (TEXT-AT (70 33) May 11%)
             (FILL red 60)
+            (COLOR cyan 60)
             (RECTANGLE (53 3) (97 47))
             """);
   }
