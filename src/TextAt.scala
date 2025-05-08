@@ -1,5 +1,5 @@
 import java.awt.geom.AffineTransform
-import java.awt.{Color, Font, Shape}
+import java.awt.Font
 
 class TextAt(args: String) extends DrawObject[Array[Any]] with Object with Colorable {
 

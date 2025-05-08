@@ -1,4 +1,4 @@
-import java.awt.{Graphics2D, Rectangle, Shape, Color}
+import java.awt.{Graphics2D, Shape, Color}
 
 class DrawContext(var graphics: Graphics2D = null) {
   var objects: Array[(DrawObject[_], Int)] = Array()

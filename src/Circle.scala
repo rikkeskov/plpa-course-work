@@ -1,5 +1,4 @@
-import java.awt.Color
-import java.awt.geom.{AffineTransform, Path2D, PathIterator, Rectangle2D}
+import java.awt.geom.Path2D
 
 class Circle(text: String) extends DrawObject[Array[Int]] with Object with Colorable with Fillable {
 

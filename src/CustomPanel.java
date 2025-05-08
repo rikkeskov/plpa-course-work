@@ -14,7 +14,6 @@ public class CustomPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        //super.paintComponent(g);
         // We repaint the component each time
         int panelHeight = getHeight();
         int panelWidth = getWidth();

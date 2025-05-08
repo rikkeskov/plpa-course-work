@@ -1,4 +1,4 @@
-import java.awt.{BasicStroke, Color, Rectangle, Shape}
+import java.awt.{BasicStroke, Rectangle, Shape}
 import java.awt.BasicStroke.{CAP_ROUND, JOIN_ROUND}
 
 

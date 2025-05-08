@@ -1,4 +1,4 @@
-import java.awt.{Color, Shape}
+import java.awt.Color
 
 trait Colorable
 

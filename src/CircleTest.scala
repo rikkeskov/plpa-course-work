@@ -10,5 +10,4 @@ class CircleTest extends AnyFlatSpec with Matchers {
     val circle = new Circle("(0 0) 10")
     circle.draw(new DrawContext(g))
   }
-
 }

@@ -1,5 +1,3 @@
-import java.awt.Color
-
 import scala.util.control.Breaks._
 
 class Line(text: String) extends DrawObject[Array[Int]] with Object with Colorable {
