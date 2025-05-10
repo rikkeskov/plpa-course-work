@@ -1,4 +1,5 @@
 import java.awt.geom.Path2D
+import scala.math.abs
 
 class Circle(text: String) extends DrawObject[Array[Int]] with Object with Colorable with Fillable {
 
@@ -7,9 +8,9 @@ class Circle(text: String) extends DrawObject[Array[Int]] with Object with Color
     case _ => throw DrawException(s"Cant match arguments to $command", this)
   }
 
-  private val x0: Int = arguments(0) * 10
-  private val y0: Int = arguments(1) * 10
-  private val radius: Int = arguments(2) * 10
+  val x0: Int = arguments(0) * 10
+  val y0: Int = arguments(1) * 10
+  val radius: Int = abs(arguments(2)) * 10
 
   override def draw(context: DrawContext): Unit = {
     val g = context.graphics
