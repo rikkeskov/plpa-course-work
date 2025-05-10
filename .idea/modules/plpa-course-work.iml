@@ -10,5 +10,6 @@
     <orderEntry type="library" name="scala-sdk-2.13.15" level="application" />
     <orderEntry type="library" name="mockito.core" level="project" />
     <orderEntry type="library" name="scalatest.scalatest_2.13" level="project" />
+    <orderEntry type="library" name="sireum" level="project" />
   </component>
 </module>
