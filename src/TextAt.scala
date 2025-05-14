@@ -8,6 +8,8 @@ class TextAt(args: String) extends DrawObject[Array[Any]] with Object with Color
     case _ => throw DrawException(s"Cant match arguments to $command", this)
   }
 
+  var fontType: Int = Font.BOLD
+
   private val x0: Int = arguments(0).asInstanceOf[Int] * 10
   private val y0: Int = arguments(1).asInstanceOf[Int] * 10
   private val text: String = arguments(2).asInstanceOf[String]
@@ -17,7 +19,7 @@ class TextAt(args: String) extends DrawObject[Array[Any]] with Object with Color
 
     val originalTransform: AffineTransform = g.getTransform
     g.setColor(color)
-    g.setFont(new Font("TimesRoman", Font.BOLD, 12))
+    g.setFont(new Font("TimesRoman", fontType, 12))
 
     g.translate(x0, y0)
     g.scale(-1, 1)

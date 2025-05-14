@@ -1,4 +1,5 @@
-import java.awt.Graphics2D
+import java.awt.BasicStroke.{CAP_ROUND, JOIN_ROUND}
+import java.awt.{BasicStroke, Font, Graphics2D}
 
 class Painter {
   private val context: DrawContext = new DrawContext() // Initialize with null graphics
@@ -50,6 +51,7 @@ class Painter {
     }
     val objects = mappedObjects.getOrElse("object", Array.empty[(DrawObject[_], Int)])
     val actions = mappedObjects.getOrElse("action", Array.empty[(DrawObject[_], Int)])
+
     actions.foreach{case (a: DrawObject[_] with Action, lineNumber) => try {
       a.draw(context, objects)
     } catch {
@@ -58,8 +60,11 @@ class Painter {
     }}
 
     objects.foreach{case (obj: DrawObject[_] with Object, lineNumber) => try {
+      val originalStroke = context.graphics.getStroke
+
       if ( obj.isInstanceOf[BoundingBox] ) {
         context.graphics.setClip(null)
+        context.graphics.setStroke(new BasicStroke(2f, CAP_ROUND, JOIN_ROUND, 1.0f, Array(3.1f, 5.1f), 0.5f))
       }
       else {
         context.latestBoundingBox match {
@@ -68,7 +73,23 @@ class Painter {
           case None =>  throw DrawException("Missing Bounding-box", null)
         }
       }
-      obj.draw(context)
+      if (obj == objects.last._1) { // last object
+        val originalFont = context.graphics.getFont
+
+        obj match { // if text change font type else change stroke type
+          case textObj: TextAt =>
+            textObj.fontType = Font.BOLD | Font.ITALIC
+          case _ =>
+            context.graphics.setStroke(new BasicStroke(2.0f))
+        }
+        obj.draw(context)
+        context.graphics.setFont(originalFont)
+      }
+      else {
+        obj.draw(context)
+      }
+
+      context.graphics.setStroke(originalStroke)
     } catch {
       case DrawException(error, drawObject) => context.addError(error, lineNumber, drawObject);
       case e: Throwable => System.out.println("Unknown object error at line: " + (lineNumber + 1) + "\n" + e.getCause + "\n" + e.toString);
