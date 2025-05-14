@@ -31,6 +31,6 @@ def leftAlignRectangleCoordinates(arguments: ISZ[Z]): ISZ[Z] = {
   }
   Deduce(|-(lowY <= highY))
   Deduce(|-(lowX <= highX & lowY <= highY))
-  return ISZ[Z](lowX, lowY, highX, highY)
+  ISZ[Z](lowX, lowY, highX, highY)
 }
 

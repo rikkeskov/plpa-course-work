@@ -23,12 +23,12 @@ class Rectangle(text: String) extends DrawObject[Array[Int]] with Object with Co
       highY = lowY - highY
       lowY = lowY - highY
     }
-    return Array[Int](lowX, lowY, highX, highY)
+    Array[Int](lowX, lowY, highX, highY)
   }
 
   override def draw(context: DrawContext): Unit = {
     val g = context.graphics
-    val coordinates = leftAlignRectangleCoordinates(arguments(0), arguments(1), arguments(2), arguments(3));
+    val coordinates = leftAlignRectangleCoordinates(arguments(0), arguments(1), arguments(2), arguments(3))
     val shape: Shape = new java.awt.Rectangle(coordinates(0) * 10, coordinates(1) * 10, (coordinates(2) - coordinates(0)) * 10, (coordinates(3) - coordinates(1)) * 10)
 
     g.setColor(fill)
