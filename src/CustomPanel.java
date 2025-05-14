@@ -40,6 +40,7 @@ public class CustomPanel extends JPanel {
         g2d.translate(0, -panelHeight);
 
         // Add our painter with the text from inputField to draw
+        g2d.setStroke(new BasicStroke(1.5f));
         painter.paint(textToDraw, g2d);
         g2d.clipRect(0, 0, panelWidth, panelHeight);
     }

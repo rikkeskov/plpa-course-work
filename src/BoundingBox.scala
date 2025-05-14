@@ -16,12 +16,8 @@ class BoundingBox(text: String) extends DrawObject[Array[Int]] with Object with 
     g.setColor(fill)
     g.fill(shape)
     g.setColor(color)
-    g.setStroke(new BasicStroke(2f, CAP_ROUND, JOIN_ROUND, 1.0f, Array(3.1f, 5.1f), 0.5f))
     g.draw(shape)
     g.setClip(shape)
     context.latestBoundingBox = Some(shape)
-
-    // Reset stroke for next drawing
-    g.setStroke(new BasicStroke(1.5f))
   }
 }
